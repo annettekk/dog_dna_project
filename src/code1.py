@@ -1,8 +1,8 @@
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
-from typing import List, Tuple
 from Bio import Align
 from Bio.Align import Alignment
+from typing import List, Tuple
 
 def load_fasta_records(mystery_file: str, database_file: str) -> Tuple[SeqRecord, List[SeqRecord]]:
     """
@@ -22,12 +22,12 @@ def load_fasta_records(mystery_file: str, database_file: str) -> Tuple[SeqRecord
 
     return mystery_record, database_records
 
-load_fasta_records('..\\data\\mystery.fa', '..\\data\\dog_breeds.fa')
-
 def find_best_alignment(mystery_record: SeqRecord, database_records: List[SeqRecord]) -> Tuple[Align.Alignment, float, str]:
     """
     Performs local pairwise alignment between a query sequence and multiple target sequences,
-    returning the best alignment based on the highest score.
+    returning the best local alignment based on the highest score. 
+    Uses local PairwiseAligner from biopython package. 
+    Best alighnment score is calculated using default settings.
 
     Parameters:
     - mystery_record (SeqRecord): A SeqRecord object containing the query sequence.
@@ -39,7 +39,7 @@ def find_best_alignment(mystery_record: SeqRecord, database_records: List[SeqRec
         - Best alignment score.
         - Best alignment description (from the target sequence).
     """
-
+    
     # Initialize the aligner
     aligner = Align.PairwiseAligner()
     aligner.mode = "local"
@@ -62,8 +62,6 @@ def find_best_alignment(mystery_record: SeqRecord, database_records: List[SeqRec
 
     return search_result_alignment, search_result_score, search_result_description
 
-find_best_alignment(mystery_record, database_records)
-
 def save_best_alignment_result(search_result_alignment: Alignment, search_result_score: float, search_result_description: str) -> None:
     """
     Generates and saves the best alignment result to a text file.
@@ -76,14 +74,14 @@ def save_best_alignment_result(search_result_alignment: Alignment, search_result
     Returns:
     - None
     """
-
+    
     # Generate the results string
     search_results = (f"Best Alignment Score: {search_result_score}\n"
-                    f"Best Alignment Description: {search_result_description}\n"
-                    f"{str(search_result_alignment)}")
+                      f"Best Alignment Description: {search_result_description}\n"
+                      f"{str(search_result_alignment)}")
         
     # Define the file path and name
-    new_file = '..\\results\\' + 'best_alignment.txt'
+    new_file = 'results\\' + 'best_alignment.txt'
 
     # Write the results to the file
     with open(new_file, 'w') as f_out:
@@ -91,4 +89,10 @@ def save_best_alignment_result(search_result_alignment: Alignment, search_result
 
     print(f"Best alignment results saved to: {new_file}")
 
-save_best_alignment_result(search_result_alignment, search_result_score, search_result_description)
+if __name__ == "__main__":
+    mystery_file = 'data\\mystery.fa'
+    database_file = 'data\\dog_breeds.fa'
+    
+    mystery_record, database_records = load_fasta_records(mystery_file, database_file)
+    search_result_alignment, search_result_score, search_result_description = find_best_alignment(mystery_record, database_records)
+    save_best_alignment_result(search_result_alignment, search_result_score, search_result_description)
