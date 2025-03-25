@@ -1,4 +1,4 @@
-Hello and welcome!
+Welcome to https://github.com/annettekk/dog_dna_project
 
 This project allows you to find the nearest DNA sequence from the a list of DNA sequences in the database file.
 Both the sequence-of-interest and the database file should be in fasta format.
