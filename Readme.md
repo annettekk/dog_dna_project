@@ -1,9 +1,13 @@
 Welcome to https://github.com/annettekk/dog_dna_project
 
 This project allows you to find the nearest DNA sequence from the a list of DNA sequences in the database file.
+
 Both the sequence-of-interest and the database file should be in fasta format.
+
 The output is description of the best match taken from its fasta record, best alighnment score calculated using default settings of the local PairwiseAligner from biopython package, and the alignment itself.
+
 Attention: this tool does not align to the reverse strands of sequences in the database.
+
 Files can be DNA sequences from any organism, not only Canis lupus familiaris, nevermind the name of the project!
 
 This is an open source code. Enjoy!
